@@ -82,19 +82,16 @@ galleryList.insertAdjacentHTML("afterbegin", newElements);
 
 galleryList.addEventListener("click", evt => {
     evt.preventDefault();
-
-    if (evt.currentTarget === evt.target) {
-        return;
-    }
+    const link = evt.target.dataset.sourse;
+  if (evt.target.nodeName !== 'IMG') {
+    return;
+  }
  
-    const parent = evt.target.closest(".gallery-image");
-    const link = parent.dataset.sourse;
-    const currentImage = images.find(({ original }) => original === link);
-
     const instance = basicLightbox.create(`
     <div class="modal">
-      <img src='${currentImage.original}' />
+      <img src='${link}'/>
     </div>
     `);
         instance.show();
- });
+});
+ 
