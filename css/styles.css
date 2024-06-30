@@ -27,8 +27,3 @@ li {
     background-color: teal;
     padding: 24px 156px;
 }
-
-.gallery-item {
-    /* width: calc((100% - 2 * 24px) / 3); */
-    /* height: 200px; */
-}

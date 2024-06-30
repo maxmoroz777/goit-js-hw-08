@@ -64,19 +64,37 @@ const images = [
   },
 ];
 
-const galleryList = document.querySelector(".gallery");
-galleryList.addEventListener("click", event => {
-    event.preventDefault();
-});
 
-const newElements = images.map((item) => `<li class="gallery-item"><a class="gallery-link" 
-href="${item.original}"> <img class="gallery-image" src = "${item.preview}"
- data-sourse="${item.original}" alt = "${item.description}"/>
- </a></li>`).join("");
+
+
+const galleryList = document.querySelector(".gallery");
+
+
+const newElements = images.map(({ preview, original, description }) => {
+    return `<li class="gallery-item">
+    <a class="gallery-link" href="${original}"> 
+        <img class="gallery-image" src = "${preview}"
+        data-sourse="${original}" alt = "${description}"/>
+    </a>
+ </li>`}).join(""); 
+
 galleryList.insertAdjacentHTML("afterbegin", newElements);
 
 galleryList.addEventListener("click", evt => {
     evt.preventDefault();
-    console.log(evt.target);
-    
-});
+
+    if (evt.currentTarget === evt.target) {
+        return;
+    }
+ 
+    const parent = evt.target.closest(".gallery-image");
+    const link = parent.dataset.sourse;
+    const currentImage = images.find(({ original }) => original === link);
+
+    const instance = basicLightbox.create(`
+    <div class="modal">
+      <img src='${currentImage.original}' />
+    </div>
+    `);
+        instance.show();
+ });
